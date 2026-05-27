@@ -1,0 +1,62 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: #f6f8f5;
+  --color-foreground: #142016;
+  --color-card: #ffffff;
+  --color-card-foreground: #142016;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #142016;
+  --color-primary: #2d6a3e;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #e7efe2;
+  --color-secondary-foreground: #1a3c2a;
+  --color-muted: #eef2ec;
+  --color-muted-foreground: #5a6b5d;
+  --color-accent: #c9a84c;
+  --color-accent-foreground: #1a1a1a;
+  --color-destructive: #b91c1c;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #d9e0d6;
+  --color-input: #d9e0d6;
+  --color-ring: #2d6a3e;
+  --radius: 0.625rem;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+}
+
+.dark {
+  --color-background: #0d1410;
+  --color-foreground: #e8efe6;
+  --color-card: #131c16;
+  --color-card-foreground: #e8efe6;
+  --color-popover: #131c16;
+  --color-popover-foreground: #e8efe6;
+  --color-primary: #5cb377;
+  --color-primary-foreground: #0d1410;
+  --color-secondary: #1a2a1f;
+  --color-secondary-foreground: #e8efe6;
+  --color-muted: #1a2a1f;
+  --color-muted-foreground: #98a89e;
+  --color-accent: #d4b95d;
+  --color-accent-foreground: #1a1a1a;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #243027;
+  --color-input: #243027;
+  --color-ring: #5cb377;
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground font-sans antialiased; }
+  h1, h2, h3 { font-family: var(--font-serif); letter-spacing: -0.01em; }
+}
+
+@layer utilities {
+  .gradient-eco { background-image: linear-gradient(135deg, #1a3c2a 0%, #2d6a3e 50%, #87a878 100%); }
+  .text-balance { text-wrap: balance; }
+}
