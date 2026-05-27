@@ -14,7 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      analyses: {
+        Row: {
+          comparison_paths: string[] | null
+          created_at: string
+          error_message: string | null
+          file_mime: string | null
+          file_name: string
+          file_path: string
+          geo_metadata: Json | null
+          id: string
+          mode: string
+          result: Json | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          comparison_paths?: string[] | null
+          created_at?: string
+          error_message?: string | null
+          file_mime?: string | null
+          file_name: string
+          file_path: string
+          geo_metadata?: Json | null
+          id?: string
+          mode: string
+          result?: Json | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          comparison_paths?: string[] | null
+          created_at?: string
+          error_message?: string | null
+          file_mime?: string | null
+          file_name?: string
+          file_path?: string
+          geo_metadata?: Json | null
+          id?: string
+          mode?: string
+          result?: Json | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
