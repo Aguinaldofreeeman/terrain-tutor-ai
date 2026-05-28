@@ -146,8 +146,8 @@ function WorkspacePage() {
             <CardHeader>
               <CardTitle>1. Arquivo(s)</CardTitle>
               <CardDescription>
-                PDF, GeoPDF, JPG, PNG, TIFF, GeoTIFF — até {MAX_FILE_MB} MB cada.
-                {multiFile && " Modo comparação aceita múltiplos arquivos."}
+                PDF, GeoPDF, JPG, PNG, TIFF, GeoTIFF — até {MAX_FILE_MB} MB cada, no máximo {MAX_FILES} arquivos.
+                {multiFile && " Modo comparação requer 2 ou mais arquivos."}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -160,11 +160,13 @@ function WorkspacePage() {
                 onClick={() => document.getElementById("file-input")?.click()}
               >
                 <Upload className="mx-auto mb-3 text-muted-foreground" />
-                <p className="font-medium">Arraste os arquivos aqui ou clique para selecionar</p>
+                <p className="font-medium">Arraste até {MAX_FILES} arquivos aqui ou clique para selecionar</p>
                 <p className="text-xs text-muted-foreground mt-1">{ACCEPTED_TYPES.split(",").filter(s=>s.startsWith(".")).join(" • ")}</p>
                 <input
                   id="file-input" type="file" className="hidden" accept={ACCEPTED_TYPES}
-                  multiple={multiFile}
+                  multiple
+                  onChange={(e) => onFiles(e.target.files)}
+                />
                   onChange={(e) => onFiles(e.target.files)}
                 />
               </div>
