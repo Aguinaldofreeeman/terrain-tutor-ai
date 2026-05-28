@@ -91,6 +91,12 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+    if (filePaths.length > 10) {
+      return new Response(JSON.stringify({ error: "Máximo de 10 arquivos por análise" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     const admin = createClient(SUPABASE_URL, SERVICE_ROLE);
 
