@@ -44,8 +44,17 @@ function WorkspacePage() {
       const isImage = /^image\//.test(f.type) && !/tiff/.test(f.type);
       valid.push({ file: f, preview: isImage ? URL.createObjectURL(f) : undefined });
     }
-    setFiles((prev) => (multiFile ? [...prev, ...valid] : valid.slice(0, 1)));
-  }, [multiFile]);
+    setFiles((prev) => {
+      const combined = [...prev, ...valid];
+      if (combined.length > MAX_FILES) {
+        toast.error(`Máximo de ${MAX_FILES} arquivos por análise.`);
+        // revoke previews for files we're dropping
+        combined.slice(MAX_FILES).forEach((f) => f.preview && URL.revokeObjectURL(f.preview));
+        return combined.slice(0, MAX_FILES);
+      }
+      return combined;
+    });
+  }, []);
 
   function removeFile(idx: number) {
     setFiles((prev) => {
