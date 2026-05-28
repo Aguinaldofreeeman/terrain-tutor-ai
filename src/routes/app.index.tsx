@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { ANALYSIS_MODES, ACCEPTED_TYPES, MAX_FILE_MB } from "@/lib/analysisModes";
+import { ANALYSIS_MODES, ACCEPTED_TYPES, MAX_FILE_MB, MAX_FILES } from "@/lib/analysisModes";
 import { toast } from "sonner";
 import { Upload, X, FileImage, Loader2 } from "lucide-react";
 
@@ -44,8 +44,17 @@ function WorkspacePage() {
       const isImage = /^image\//.test(f.type) && !/tiff/.test(f.type);
       valid.push({ file: f, preview: isImage ? URL.createObjectURL(f) : undefined });
     }
-    setFiles((prev) => (multiFile ? [...prev, ...valid] : valid.slice(0, 1)));
-  }, [multiFile]);
+    setFiles((prev) => {
+      const combined = [...prev, ...valid];
+      if (combined.length > MAX_FILES) {
+        toast.error(`Máximo de ${MAX_FILES} arquivos por análise.`);
+        // revoke previews for files we're dropping
+        combined.slice(MAX_FILES).forEach((f) => f.preview && URL.revokeObjectURL(f.preview));
+        return combined.slice(0, MAX_FILES);
+      }
+      return combined;
+    });
+  }, []);
 
   function removeFile(idx: number) {
     setFiles((prev) => {
@@ -137,8 +146,8 @@ function WorkspacePage() {
             <CardHeader>
               <CardTitle>1. Arquivo(s)</CardTitle>
               <CardDescription>
-                PDF, GeoPDF, JPG, PNG, TIFF, GeoTIFF — até {MAX_FILE_MB} MB cada.
-                {multiFile && " Modo comparação aceita múltiplos arquivos."}
+                PDF, GeoPDF, JPG, PNG, TIFF, GeoTIFF — até {MAX_FILE_MB} MB cada, no máximo {MAX_FILES} arquivos.
+                {multiFile && " Modo comparação requer 2 ou mais arquivos."}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -151,11 +160,11 @@ function WorkspacePage() {
                 onClick={() => document.getElementById("file-input")?.click()}
               >
                 <Upload className="mx-auto mb-3 text-muted-foreground" />
-                <p className="font-medium">Arraste os arquivos aqui ou clique para selecionar</p>
+                <p className="font-medium">Arraste até {MAX_FILES} arquivos aqui ou clique para selecionar</p>
                 <p className="text-xs text-muted-foreground mt-1">{ACCEPTED_TYPES.split(",").filter(s=>s.startsWith(".")).join(" • ")}</p>
                 <input
                   id="file-input" type="file" className="hidden" accept={ACCEPTED_TYPES}
-                  multiple={multiFile}
+                  multiple
                   onChange={(e) => onFiles(e.target.files)}
                 />
               </div>

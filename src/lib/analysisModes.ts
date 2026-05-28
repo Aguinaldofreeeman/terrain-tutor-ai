@@ -37,3 +37,5 @@ export const ACCEPTED_TYPES =
   ".pdf,.geopdf,.jpg,.jpeg,.png,.tif,.tiff,.geotiff,image/jpeg,image/png,image/tiff,application/pdf";
 
 export const MAX_FILE_MB = 20;
+
+export const MAX_FILES = 10;
