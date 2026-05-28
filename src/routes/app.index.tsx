@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { ANALYSIS_MODES, ACCEPTED_TYPES, MAX_FILE_MB } from "@/lib/analysisModes";
+import { ANALYSIS_MODES, ACCEPTED_TYPES, MAX_FILE_MB, MAX_FILES } from "@/lib/analysisModes";
 import { toast } from "sonner";
 import { Upload, X, FileImage, Loader2 } from "lucide-react";
 
