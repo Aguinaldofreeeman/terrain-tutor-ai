@@ -167,8 +167,6 @@ function WorkspacePage() {
                   multiple
                   onChange={(e) => onFiles(e.target.files)}
                 />
-                  onChange={(e) => onFiles(e.target.files)}
-                />
               </div>
 
               {files.length > 0 && (
